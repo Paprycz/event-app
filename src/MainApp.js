@@ -4,7 +4,7 @@ import Bar from "./Bar";
 import Footer from './Footer'
 import DisplayEvent from './DisplayEvent';
 import { CssBaseline } from "@mui/material";
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import {BrowserRouter, Routes ,Route } from 'react-router-dom';
 
 const MainApp = () => {
     
@@ -16,21 +16,21 @@ const MainApp = () => {
     }
     
     return(
-        <Router>
+        <BrowserRouter>
             <CssBaseline />
             <Bar key="Bar"/>
-            <Switch>
-                <Route exact path="/">
+            <Routes>
+                <Route exact path="/event-app" element={
                     <EventCards key="EventCards" events={events} handleUpdateEvents={()=>{updateEvents()}}/>
-                </Route>
+                } />
                 {events.map((element,at) =>
-                    <Route exact path={"/"+JSON.parse(element).key}>
+                    <Route exact path={"/"+JSON.parse(element).key} element={
                         <DisplayEvent key={"DisplayEvent_"+at} eventObject={element} />
-                    </Route>
+                    } />
                 )}
-            </Switch>
+            </Routes>
             <Footer key="Footer" />
-        </Router>
+        </BrowserRouter>
     )
 }
 
