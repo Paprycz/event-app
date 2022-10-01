@@ -4,7 +4,7 @@ import Bar from "./components/Bar";
 import Footer from './components/Footer'
 import DisplayEvent from './components/DisplayEvent';
 import { CssBaseline } from "@mui/material";
-import {BrowserRouter, Routes ,Route } from 'react-router-dom';
+import { Routes ,Route } from 'react-router-dom';
 
 const MainApp = () => {
     
