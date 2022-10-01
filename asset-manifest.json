@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/event-app/static/js/main.b05b884c.js",
+    "main.js": "/event-app/static/js/main.f0499739.js",
     "index.html": "/event-app/index.html",
-    "main.b05b884c.js.map": "/event-app/static/js/main.b05b884c.js.map"
+    "main.f0499739.js.map": "/event-app/static/js/main.f0499739.js.map"
   },
   "entrypoints": [
-    "static/js/main.b05b884c.js"
+    "static/js/main.f0499739.js"
   ]
 }
