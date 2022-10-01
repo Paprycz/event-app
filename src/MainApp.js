@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import EventCards from './EventCards';
-import Bar from "./Bar";
-import Footer from './Footer'
-import DisplayEvent from './DisplayEvent';
+import EventCards from './components/EventCards';
+import Bar from "./components/Bar";
+import Footer from './components/Footer'
+import DisplayEvent from './components/DisplayEvent';
 import { CssBaseline } from "@mui/material";
 import {BrowserRouter, Routes ,Route } from 'react-router-dom';
 
@@ -16,21 +16,21 @@ const MainApp = () => {
     }
     
     return(
-        <BrowserRouter basemname={`/${process.env.PUBLIC_URL}`}>
-            <CssBaseline />
-            <Bar key="Bar"/>
-            <Routes>
-                <Route exact path="/event-app" element={
-                    <EventCards key="EventCards" events={events} handleUpdateEvents={()=>{updateEvents()}} />
-                } />
-                 {events.map((elementObject,at) =>
-                        <Route exact path={"/Event_"+JSON.parse(elementObject).key} element={
-                            <DisplayEvent key={"DisplayEvent_"+at} eventObject={elementObject} />} 
-                        />
-                    )}
-            </Routes>
-            <Footer key="Footer" />
-        </BrowserRouter>
+            <>
+                <CssBaseline />
+                <Bar key="Bar"/>
+                <Routes>
+                    <Route exact path="/" element={
+                        <EventCards key="EventCards" events={events} handleUpdateEvents={()=>{updateEvents()}} />
+                    } />
+                    {events.map((elementObject,at) =>
+                            <Route exact path={"/Event_"+JSON.parse(elementObject).key} element={
+                                <DisplayEvent key={"DisplayEvent_"+at} eventObject={elementObject} />} 
+                            />
+                        )}
+                </Routes>
+                <Footer key="Footer" />
+            </>
     )
 }
 

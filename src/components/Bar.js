@@ -1,5 +1,5 @@
 import {AppBar, Toolbar, Typography} from '@mui/material'
-import useStyles from './styles'
+import useStyles from '../styles'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 //Adding a blue bar on top

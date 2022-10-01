@@ -8,7 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import { MuiTelInput } from 'mui-tel-input'
 import Select from '@mui/material/Select';
 
-import useStyles from "./styles";
+import useStyles from "../styles";
 
 
 

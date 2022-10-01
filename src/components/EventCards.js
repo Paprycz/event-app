@@ -3,7 +3,7 @@ import { Button, Container, Grid } from '@mui/material';
 import { Card, CardActions} from '@mui/material';
 
 
-import useStyles from './styles'
+import useStyles from '../styles'
 import TitleContent from './TitleContent';
 import MakeAnEventHTML from './MakeAnEventHTML';
 import DialogWindow from './DialogWindow';

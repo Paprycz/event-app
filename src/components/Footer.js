@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material"
-import useStyles from "./styles"
+import useStyles from "../styles"
 
 const Footer = () => {
     const {classes} = useStyles()

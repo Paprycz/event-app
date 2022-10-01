@@ -1,14 +1,13 @@
-import useStyles from "./styles"
+import useStyles from "../styles"
 import { Button, Grid, Typography, } from "@mui/material";
 import { Card, CardActions, CardContent, CardMedia} from '@mui/material';
+import { Link } from "react-router-dom";
 
 const MakeAnEventHTML = (props) => {
     
     const {classes} = useStyles();
 
     const element = props.element
-
-    const displayEvent = ()=>{window.location = "https://paprycz.github.io/event-app/Events_"+element.key}
 
     return(
     
@@ -31,7 +30,11 @@ const MakeAnEventHTML = (props) => {
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button size="small" color="primary" onClick={()=>{displayEvent()}}>Wyświetl</Button>
+                        <Link style={{textDecoration: 'none'}} to={"/Event_"+element.key}>
+                            <Button size="small" color="primary">
+                                Wyświetl
+                            </Button>
+                        </Link>
                         <Button size="small" color="primary">Edytuj</Button>
                         <Button size="small" color="primary" onClick={()=>{
                                 localStorage.removeItem("Event_"+element.key)

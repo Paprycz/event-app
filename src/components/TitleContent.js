@@ -1,5 +1,5 @@
 import { Container, Typography } from "@mui/material";
-import useStyles from './styles'
+import useStyles from '../styles'
 
 //Adding a header under a blue bar
 const TitleContent = () => {
