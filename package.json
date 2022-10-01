@@ -1,5 +1,5 @@
 {
-  "homepage" : "https://Paprycz.github.io/event-app",
+  "homepage": "https://Paprycz.github.io/event-app",
   "name": "materialui",
   "version": "0.1.0",
   "private": true,
@@ -50,8 +50,7 @@
       "last 1 safari version"
     ]
   },
-
-"devDependencies": {
-  "gh-pages": "^4.0.0"
-}
+  "devDependencies": {
+    "gh-pages": "^4.0.0"
+  }
 }
