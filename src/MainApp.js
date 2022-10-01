@@ -24,7 +24,7 @@ const MainApp = () => {
                     <EventCards key="EventCards" events={events} handleUpdateEvents={()=>{updateEvents()}} />
                 } />
                  {events.map((element,at) =>
-                        <Route exact path={"/"+JSON.parse(element).key} element={
+                        <Route exact path={"/Event_"+JSON.parse(element).key} element={
                             <DisplayEvent key={"DisplayEvent_"+at} eventObject={element} />} 
                         />
                     )}
