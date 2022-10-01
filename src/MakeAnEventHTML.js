@@ -8,7 +8,7 @@ const MakeAnEventHTML = (props) => {
 
     const element = props.element
 
-    const displayEvent = ()=>{window.location = "http://localhost:3000/"+element.key}
+    const displayEvent = ()=>{window.location = "https://paprycz.github.io/event-app/Events_"+element.key}
 
     return(
     
