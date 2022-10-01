@@ -16,7 +16,7 @@ const MainApp = () => {
     }
     
     return(
-        <BrowserRouter>
+        <BrowserRouter basemname={`/${process.env.PUBLIC_URL}`}>
             <CssBaseline />
             <Bar key="Bar"/>
             <Routes>
