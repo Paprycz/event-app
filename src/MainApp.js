@@ -21,13 +21,13 @@ const MainApp = () => {
             <Bar key="Bar"/>
             <Routes>
                 <Route exact path="/event-app" element={
-                    <EventCards key="EventCards" events={events} handleUpdateEvents={()=>{updateEvents()}}/>
-                    {events.map((element,at) =>
-                        <Route exact path={"/"+JSON.parse(element).key} element={
-                            <DisplayEvent key={"DisplayEvent_"+at} eventObject={element} />
-                        } />
-                )}
+                    <EventCards key="EventCards" events={events} handleUpdateEvents={()=>{updateEvents()}} />
                 } />
+                 {events.map((element,at) =>
+                        <Route exact path={"/"+JSON.parse(element).key} element={
+                            <DisplayEvent key={"DisplayEvent_"+at} eventObject={element} />} 
+                        />
+                    )}
             </Routes>
             <Footer key="Footer" />
         </BrowserRouter>
