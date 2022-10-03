@@ -5,7 +5,7 @@ import { Button, Grid, Input, } from "@mui/material";
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 
-import { MuiTelInput } from 'mui-tel-input'
+import { MuiTelInput, matchIsValidTel } from 'mui-tel-input'
 import Select from '@mui/material/Select';
 
 import useStylesDialog from "../styles/stylesDialog";
@@ -57,11 +57,18 @@ const DialogWindow = (props) => {
     }
 
     //EVENT PLACE STATE
-    const [place, setPlace] = useState("")
+    const [place, setPlace] = useState({
+        value: "",
+        error: false,
+        errorMes: ""
+    })
 
     //EVENT PLACE HANDLE FUNCTION
-    const handlePlaceChange = (event) => {
-        setPlace(event.target.value)
+    const handlePlaceChange = (e) => {
+        setPlace({
+            ...place,
+            value: e.target.value
+        })
     }
 
     //EVENT TYPE PICKER STATE
@@ -73,21 +80,25 @@ const DialogWindow = (props) => {
 
     //EVENT TYPE PICKER HANDLE FUNCTION
     
-    const handleListChange = (event) => {
+    const handleListChange = (e) => {
         setList({
             ...list,
-            value: event.target.value
+            value: e.target.value
         });
     }
 
     //EVENT IMAGE SRC STATE
-    const [image, setImage] = useState("")
+    const [image, setImage] = useState({
+        value:"",
+        error: false,
+        errorMes:""
+    })
 
     //EVENT IMAGE MINIATURE SET FUNCTION
     const checkImage = ()=>{
-        if(image !== ""){
+        if(image.value !== ""){
             return(
-                <img src={image}/>
+                <img src={image.value}/>
             )
         } else return(<div>Brak Zdjęcia</div>)
     }
@@ -100,35 +111,55 @@ const DialogWindow = (props) => {
     })
 
     //EVENT DATE HANDLE FUNCTION
-    const handleDateChange = (event) => {
+    const handleDateChange = (e) => {
         setDate({
             ...date,
-            value: event.target.value
+            value: e.target.value
         })
     }
 
     //EVENT TIME STATE
-    const [time, setTime] = useState("")
+    const [time, setTime] = useState({
+        value: "",
+        error: false,
+        errorMes: ""
+    })
 
     //EVENT TIME HANDLE FUNCTION
-    const handleTimeChange = (event) => {
-        setTime(event.target.value)
+    const handleTimeChange = (e) => {
+        setTime({
+                ...time,
+                value: e.target.value
+            })
     }
 
     //EVENT DESCRIPTION STATE
-    const [description, setDescription] = useState("")
-
+    const [description, setDescription] = useState({
+        value: "",
+        error: false,
+        errorMes: ""
+    })
     //EVENT DESCRIPTION HANDLE FUNCTION
-    const handleDescriptionChange = (event) => {
-        setDescription(event.target.value)
+    const handleDescriptionChange = (e) => {
+        setDescription({
+            ...description,
+            value: e.target.value
+        })
     }
 
     //EVENT MOBILE NUMBER STATE
-    const [phone, setPhone] = React.useState('+48')
+    const [phone, setPhone] = React.useState({
+        value: '+48',
+        error: false,
+        errorMes: ""
+        })
 
     //EVENT MOBILE NUMBER HANDLE FUNCTION
     const handlePhoneChange = (newPhone) => {
-        setPhone(newPhone)
+        setPhone({
+            ...phone,
+            value: newPhone
+        })
     }
 
     //EVENT E-MAIL NUMBER STATE
@@ -150,14 +181,14 @@ const DialogWindow = (props) => {
     const clearDialog = () =>{ 
         console.log(image)
         console.log(document.querySelector("#photoInput").value)
-        setTitle({...title, value:"", error:false, errorMes: ""})
-        setPlace("")
-        setList({...list, vlaue:"", error:false, errorMes: ""})
-        setDate({...date, value:"", error:false, errorMes: ""})
-        setTime("")
-        setPhone("+48")
-        setDescription("")
-        setEmail("")
+        setTitle({value:"", error:false, errorMes: ""})
+        setPlace({value:"", error:false, errorMes: ""})
+        setList({vlaue:"", error:false, errorMes: ""})
+        setDate({value:"", error:false, errorMes: ""})
+        setTime({value:"", error:false, errorMes: ""})
+        setPhone({value:"+48", error:false, errorMes: ""})
+        setDescription({value:"", error:false, errorMes: ""})
+        setEmail({value:"", error:false, errorMes: ""})
     }
 
 //EVENT INPUTS CHECKING FUNCTION
@@ -176,9 +207,9 @@ const DialogWindow = (props) => {
                 errorMes: "Tytuł nie może być pusty!"
             })
             errorCatch=true
-        } 
+        }
         
-        //IF RIGHT
+            //IF RIGHT
         else {
             setTitle({
                 ...title,
@@ -186,6 +217,29 @@ const DialogWindow = (props) => {
                 errorMes: ""
             })
         }
+
+        //PLACE CHECKING CONDITIONS
+        
+            //IF WRONG
+            console.log("halo")
+            console.log(place)
+            if(!place.value || place.value[0] === " ") {
+                setPlace({
+                    ...place,
+                    error:true,
+                    errorMes: "Określ miejsce!"
+                })
+                errorCatch=true
+            } 
+            
+            //IF RIGHT
+            else {
+                setPlace({
+                    ...place,
+                    error: false,
+                    errorMes: ""
+                })
+            }
 
         //TYPE CHECKING CONDITIONS
         
@@ -229,14 +283,76 @@ const DialogWindow = (props) => {
             })
         }
 
+        //TIME CHECKING CONDITIONS
+        
+            //IF WRONG
+            if(!time.value || time.value[0] === " ") {
+                setTime({
+                    ...time,
+                    error:true,
+                    errorMes: "Określ czas!"
+                })
+                errorCatch=true
+            } 
+            
+            //IF RIGHT
+            else {
+                setTime({
+                    ...time,
+                    error:false,
+                    errorMes: ""
+                })
+            }
+
+            //PHONE CHECKING CONDITIONS
+        
+                //IF WRONG
+            if(!matchIsValidTel(phone.value)) {
+                setPhone({
+                    ...phone,
+                    error:true,
+                    errorMes: "Nieprawidłowy numer!"
+                })
+                errorCatch=true
+            } 
+            
+            //IF RIGHT
+            else {
+                setPhone({
+                    ...phone,
+                    error:false,
+                    errorMes: ""
+                })
+            }
+
+            //DESCRIPTION CHECKING CONDITIONS
+        
+            //IF WRONG
+        if(!description.value || description.value[0] === " ") {
+            setDescription({
+                ...description,
+                error:true,
+                errorMes: "Nieprawidłowy opis!"
+            })
+            errorCatch=true
+        } 
+        
+        //IF RIGHT
+        else {
+            setDescription({
+                ...description,
+                error:false,
+                errorMes: ""
+            })
+        }
+
         //EMAIL CHECKING CONDITIONS
         const atPosition = email.value.indexOf('@')
         const dotPosition = email.value.indexOf('.',atPosition)
-
         
             //IF WRONG
                 //IF ADRESS EXISTS && (ADRESS DOESN'T CONTAIN  '@' || ADRES DOESN'T CONTAIN '.' AFTER '@' || '.' COMES RIGHT AFTER '@' || '.' APPEARS AT THE END OF THE ADRESS )
-        if(email.value && (atPosition<1 || dotPosition===-1 || dotPosition-atPosition<2 || (dotPosition+1)===email.value.length)) {
+        if(atPosition<1 || dotPosition===-1 || dotPosition-atPosition<2 || (dotPosition+1)===email.value.length) {
             setEmail({
                 ...email,
                 error:true,
@@ -277,25 +393,37 @@ const DialogWindow = (props) => {
                 <Grid item className={classes.firstRow}>
                     <div className={classes.input}>
                         <FormControl error={title.error} >
-                            <div>Nazwa wydarzenia:</div>
-                                <Input
-                                    id="titleContent"  
-                                    fullWidth 
-                                    value={title.value} 
-                                    onChange={handleTitleChange}
-                                />
-                                <FormHelperText>{title.errorMes}</FormHelperText>
+                            Nazwa wydarzenia:
+                            
+                            <Input
+                                id="titleContent"  
+                                fullWidth 
+                                value={title.value} 
+                                onChange={handleTitleChange}
+                            />
+                            
+                            <FormHelperText>{title.errorMes}</FormHelperText>
                         </FormControl>
                     </div>
 
                     <div className={classes.input}>
-                        <div>Miejsce:</div>
-                        <Input id="placeContent" fullWidth value={place} onChange={handlePlaceChange}></Input>
+                        <FormControl error={place.error} >
+                            Miejsce:
+                            
+                            <Input 
+                                id="placeContent" 
+                                fullWidth 
+                                value={place.value} 
+                                onChange={handlePlaceChange}
+                            />
+                            
+                            <FormHelperText>{place.errorMes}</FormHelperText>
+                        </FormControl>
                     </div>
                     
                     <div className={classes.input}>
-                        <div>Rodzaj wydarzenia:</div>
-                        
+                        Rodzaj wydarzenia:
+
                         <FormControl fullWidth required hiddenLabel variant='standard' sx={{marginTop:2}} error={list.error}>
                             <Select
                                 id="typeContent"
@@ -314,6 +442,7 @@ const DialogWindow = (props) => {
                             <div className={classes.addPhoto}>
                                 <Button variant="outlined" component="label">
                                     Dodaj zdjęcie
+                                   
                                     <input id="photoInput" hidden accept="image/*" multiple type="file" />
                                 </Button>
                                     <div>{checkImage()}</div>
@@ -324,26 +453,38 @@ const DialogWindow = (props) => {
                 <Grid item className={classes.firstRow}>
                     <div className = {classes.input}>
                         Data:
+                        
                         <TextField id="dateContent" type="date" value={date.value} error={date.error} helperText={date.errorMes} onChange={handleDateChange} />
                     </div>
                     
                     <div className = {classes.input}>
-                        Czas rozpoczęcia:
-                        <TextField id="timeContent" type="time" value={time} onChange={handleTimeChange}/>
+                        <FormControl error={time.error}>
+                            Czas rozpoczęcia:
+                            
+                            <TextField id="timeContent" type="time" error={phone.error} value={time.value} onChange={handleTimeChange}/>
+                            
+                            <FormHelperText>{time.errorMes}</FormHelperText>
+                        </FormControl>
                     </div>
                     
                     <div className = {classes.input}>
-                        <div>Nr telefonu:</div>
-                        <MuiTelInput id="phoneContent"
-                            value={phone} 
-                            onChange={handlePhoneChange} 
-                            focusOnSelectCountry
-                        />
+                        <FormControl error={phone.error}>
+                            Nr telefonu:
+                            
+                            <MuiTelInput id="phoneContent"
+                                value={phone.value}
+                                error={phone.error}
+                                onChange={handlePhoneChange} 
+                                focusOnSelectCountry
+                            />
+                            
+                            <FormHelperText>{phone.errorMes}</FormHelperText>
+                        </FormControl>
                     </div>
                     
                     <FormControl error={email.error}>
                         <div className={classes.input}>
-                            <div>e-mail:</div>
+                            e-mail:
                             <Input id="emailContent" fullWidth value={email.value} onChange={handleEmailChange}></Input>
                         </div>
                         
@@ -352,8 +493,11 @@ const DialogWindow = (props) => {
                 </Grid>
                 
                 <Grid item className={classes.secondRow}>
-                    <div>Opis:</div>
-                    <TextField id="descriptionContent" multiline value={description} onChange={handleDescriptionChange} />
+                    <FormControl error={description.error}>
+                    Opis:
+                    <TextField id="descriptionContent"  multiline error={description.error} value={description.value} onChange={handleDescriptionChange} />
+                    <FormHelperText>{description.errorMes}</FormHelperText>
+                    </FormControl>
                 </Grid>
             </Grid>
         </DialogContent>
