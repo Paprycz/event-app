@@ -6,7 +6,7 @@ import { Card, CardActions} from '@mui/material';
 import useStyles from '../styles'
 import TitleContent from './TitleContent';
 import MakeAnEventHTML from './MakeAnEventHTML';
-import DialogWindow from './DialogWindow';
+import DialogWindow from '../DialogWindow/DialogWindow';
 
 const EventCards = (props) => {
 
