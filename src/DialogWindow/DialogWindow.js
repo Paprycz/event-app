@@ -8,14 +8,14 @@ import FormControl from '@mui/material/FormControl';
 import { MuiTelInput } from 'mui-tel-input'
 import Select from '@mui/material/Select';
 
-import useStyles from "../styles";
+import useStylesDialog from "../styles/stylesDialog";
 
 
 
 const DialogWindow = (props) => {
 
 //STYLES HANDLER (CSS - MUI)
-    const {classes} = useStyles();
+    const {classes} = useStylesDialog();
 
 //FUNCTION CREATING EVENT OBJECT
 
@@ -24,7 +24,7 @@ const DialogWindow = (props) => {
             key : document.querySelector("#dateContent").value+'_'+document.querySelector("#titleContent").value.replace(/\s+/g, '-').toLowerCase(),
             title : document.querySelector("#titleContent").value,
             place : document.querySelector("#placeContent").value,
-            type : list,
+            type : list.value,
             date : document.querySelector("#dateContent").value,
             time: document.querySelector("#timeContent").value,
             phone : document.querySelector("#phoneContent").value,
@@ -242,6 +242,7 @@ const DialogWindow = (props) => {
                 error:true,
                 errorMes:"Nieprawidłowy e-mail!"
             })
+            errorCatch=true
         }
         
             //IF RIGHT
@@ -273,8 +274,8 @@ const DialogWindow = (props) => {
 
         <DialogContent>
             <Grid container spacing={4}>
-                <Grid item className={classes.dialogFirstRow}>
-                    <div className={classes.dialogContent}>
+                <Grid item className={classes.firstRow}>
+                    <div className={classes.input}>
                         <FormControl error={title.error} >
                             <div>Nazwa wydarzenia:</div>
                                 <Input
@@ -287,12 +288,12 @@ const DialogWindow = (props) => {
                         </FormControl>
                     </div>
 
-                    <div className={classes.dialogContent}>
+                    <div className={classes.input}>
                         <div>Miejsce:</div>
                         <Input id="placeContent" fullWidth value={place} onChange={handlePlaceChange}></Input>
                     </div>
                     
-                    <div className={classes.dialogContent}>
+                    <div className={classes.input}>
                         <div>Rodzaj wydarzenia:</div>
                         
                         <FormControl fullWidth required hiddenLabel variant='standard' sx={{marginTop:2}} error={list.error}>
@@ -310,7 +311,7 @@ const DialogWindow = (props) => {
                             <FormHelperText>{list.errorMes}</FormHelperText>
                         </FormControl>
                             
-                            <div className={classes.dialogAddPhotoContent}>
+                            <div className={classes.addPhoto}>
                                 <Button variant="outlined" component="label">
                                     Dodaj zdjęcie
                                     <input id="photoInput" hidden accept="image/*" multiple type="file" />
@@ -320,18 +321,18 @@ const DialogWindow = (props) => {
                     </div>
                 </Grid>
 
-                <Grid item className={classes.dialogFirstRow}>
-                    <div className = {classes.dialogContent}>
+                <Grid item className={classes.firstRow}>
+                    <div className = {classes.input}>
                         Data:
                         <TextField id="dateContent" type="date" value={date.value} error={date.error} helperText={date.errorMes} onChange={handleDateChange} />
                     </div>
                     
-                    <div className = {classes.dialogContent}>
+                    <div className = {classes.input}>
                         Czas rozpoczęcia:
                         <TextField id="timeContent" type="time" value={time} onChange={handleTimeChange}/>
                     </div>
                     
-                    <div className = {classes.dialogContent}>
+                    <div className = {classes.input}>
                         <div>Nr telefonu:</div>
                         <MuiTelInput id="phoneContent"
                             value={phone} 
@@ -341,7 +342,7 @@ const DialogWindow = (props) => {
                     </div>
                     
                     <FormControl error={email.error}>
-                        <div className={classes.dialogContent}>
+                        <div className={classes.input}>
                             <div>e-mail:</div>
                             <Input id="emailContent" fullWidth value={email.value} onChange={handleEmailChange}></Input>
                         </div>
@@ -350,7 +351,7 @@ const DialogWindow = (props) => {
                     </FormControl>
                 </Grid>
                 
-                <Grid item className={classes.dialogLastRow}>
+                <Grid item className={classes.secondRow}>
                     <div>Opis:</div>
                     <TextField id="descriptionContent" multiline value={description} onChange={handleDescriptionChange} />
                 </Grid>

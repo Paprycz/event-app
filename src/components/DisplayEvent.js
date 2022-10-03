@@ -1,37 +1,46 @@
-import useStyles from "../styles"
+import useStylesDisplayEvent from "../styles/stylesDisplayEvent"
 import { Container, Typography } from "@mui/material"
 
 const DisplayEvent = (props) => {
-    const {classes} = useStyles(props)
+    const {classes} = useStylesDisplayEvent()
     const eventObject = JSON.parse(props.eventObject)
     console.log(eventObject)
     console.log(eventObject.title)
     return(
         <>
             <div className={classes.container}>
-                <Container maxWidth="sm" className={classes.titleContent}>
+                <Container maxWidth="sm" className={classes.title}>
                     <Typography variant="h2" align="center" color="textPrimary" gutterBottom>
                         {eventObject.title}
                     </Typography>
+                    
                     <Typography variant="h5" align="center" color ="textSecondary" paragraph>
                         {eventObject.type}
                     </Typography>
                 </Container>
             </div>
-            <div className={classes.eventContent}>
+            
+            <div className={classes.event}>
                 <img className={classes.eventImage} src='https://source.unsplash.com/random' />
-                <div className={classes.textContent}>
-                    <div className={classes.eventInfoContent}>
+                
+                <div className={classes.eventTextContent}>
+                    <div className={classes.timeAndPlace}>
                         <Typography variant="h4">{eventObject.date}</Typography> 
+                        
                         <Typography variant="h4">{eventObject.time}</Typography> 
+                        
                         <Typography variant="h4">{eventObject.place}</Typography> 
                     </div>
-                    <Typography className={classes.descriptionContent} variant="h6">
+                    
+                    <Typography className={classes.description} variant="h6">
                         {eventObject.description}
                     </Typography>
-                    <div className={classes.contactContent}>
+                    
+                    <div className={classes.contact}>
                         <Typography variant="h5"><b>Kontakt:</b> </Typography>
+                        
                         <Typography variant="h6">{eventObject.phone}</Typography>
+                        
                         <Typography variant="h6">{eventObject.email}</Typography>
                     </div>
                 </div>
