@@ -1,21 +1,19 @@
 import useStylesDisplayEvent from "../styles/stylesDisplayEvent"
 import { Container, Typography } from "@mui/material"
 
-import { storage } from '../firebase'
-import { getDownloadURL, ref } from "firebase/storage"
+import getImage from '../eventManagement/getImage'
 import { useState } from "react"
 
 const DisplayEvent = (props) => {
     const {classes} = useStylesDisplayEvent()
     const eventObject = JSON.parse(props.eventObject)
-    const [sourceImage, setSourceImage] = useState("https://source.unsplash.com/random")
-    async function getImage() {
-    if(eventObject.image !== null) {
-        console.log(eventObject.image)
-        const imageURL = await getDownloadURL(ref(storage, `images/${eventObject.image}`))
-        setSourceImage(imageURL)
-    }}
-    getImage()
+    const [sourceImage, setSourceImage] = useState("null")
+    async function setImage()  {
+        const image = await getImage(eventObject.image)
+        setSourceImage(image)
+    }
+    setImage()
+
     return(
         <>
             <div className={classes.container}>

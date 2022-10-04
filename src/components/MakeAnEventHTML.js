@@ -6,11 +6,20 @@ import { Link } from "react-router-dom";
 import { storage } from "../firebase";
 import { deleteObject, ref } from "firebase/storage";
 
+import { useState } from "react";
+import getImage from "../eventManagement/getImage";
+
 const MakeAnEventHTML = (props) => {
     
     const {classes} = useStylesEventCards();
 
     const element = props.element
+    const [sourceImage, setSourceImage] = useState("null")
+    async function setImage()  {
+        const image = await getImage(element.image)
+        setSourceImage(image)
+    }
+    setImage()
 
     return(
     
@@ -18,7 +27,7 @@ const MakeAnEventHTML = (props) => {
             <Card className={classes.card}>
                 <CardMedia
                     className={classes.image}
-                    image="https://source.unsplash.com/random"
+                    image={sourceImage}
                     title="Image Title"
                 />
                 

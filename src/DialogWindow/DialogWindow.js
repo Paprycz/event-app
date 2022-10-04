@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Dialog, DialogActions, DialogTitle, DialogContent, FormHelperText, TextField } from '@mui/material';
+import { Dialog, DialogActions, DialogTitle, DialogContent, FormHelperText, TextField, dialogTitleClasses } from '@mui/material';
 import { Button, Grid, Input, } from "@mui/material";
 
 import MenuItem from '@mui/material/MenuItem';
@@ -41,6 +41,7 @@ const DialogWindow = (props) => {
 //DIALOG CLOSING FUNCTION
 
     const handleClose = () => {
+        clearDialog()
         props.closeDialog()
     }
 
@@ -211,23 +212,23 @@ const DialogWindow = (props) => {
         //TITLE CHECKING CONDITIONS
         
             //IF WRONG
-        if(!title.value || title.value[0] === " ") {
-            setTitle({
-                ...title,
-                error:true,
-                errorMes: "Tytuł nie może być pusty!"
-            })
-            errorCatch=true
-        }
-        
+            if(!title.value || title.value[0] === " ") {
+                setTitle({
+                    ...title,
+                    error:true,
+                    errorMes: "Określ miejsce!"
+                })
+                errorCatch=true
+            } 
+            
             //IF RIGHT
-        else {
-            setTitle({
-                ...title,
-                error:false,
-                errorMes: ""
-            })
-        }
+            else {
+                setTitle({
+                    ...title,
+                    error: false,
+                    errorMes: ""
+                })
+            }
 
         //PLACE CHECKING CONDITIONS
         
@@ -380,11 +381,10 @@ const DialogWindow = (props) => {
         }
 
         //NO ERROR CONDITIONS
-        if(!errorCatch) {
+        if(!errorCatch || title.error) {
             const temp = makeAnEvent()
             localStorage.setItem("Event_"+temp.key, JSON.stringify(temp))
             handleImageUpload()
-            clearDialog()
             handleClose()
         }
     }
