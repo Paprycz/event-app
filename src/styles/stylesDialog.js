@@ -33,6 +33,10 @@ const useStylesDialog = makeStyles()((theme) =>{
             padding: '5px',
             marginTop:'20px'
         },
+        imageMiniature: {
+            fontSize:'80%',
+            marginLeft:'10px'
+        }
     }
 })
 

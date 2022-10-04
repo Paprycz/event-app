@@ -3,6 +3,9 @@ import { Button, Grid, Typography, } from "@mui/material";
 import { Card, CardActions, CardContent, CardMedia} from '@mui/material';
 import { Link } from "react-router-dom";
 
+import { storage } from "../firebase";
+import { deleteObject, ref } from "firebase/storage";
+
 const MakeAnEventHTML = (props) => {
     
     const {classes} = useStylesEventCards();
@@ -43,6 +46,7 @@ const MakeAnEventHTML = (props) => {
                     <Button size="small" color="primary">Edytuj</Button>
                     
                     <Button size="small" color="primary" onClick={()=>{
+                            deleteObject(ref(storage, `images/${element.image}`))
                             localStorage.removeItem("Event_"+element.key)
                             props.updateEvent()
                             }}>Usuń</Button>

@@ -1,11 +1,21 @@
 import useStylesDisplayEvent from "../styles/stylesDisplayEvent"
 import { Container, Typography } from "@mui/material"
 
+import { storage } from '../firebase'
+import { getDownloadURL, ref } from "firebase/storage"
+import { useState } from "react"
+
 const DisplayEvent = (props) => {
     const {classes} = useStylesDisplayEvent()
     const eventObject = JSON.parse(props.eventObject)
-    console.log(eventObject)
-    console.log(eventObject.title)
+    const [sourceImage, setSourceImage] = useState("https://source.unsplash.com/random")
+    async function getImage() {
+    if(eventObject.image !== null) {
+        console.log(eventObject.image)
+        const imageURL = await getDownloadURL(ref(storage, `images/${eventObject.image}`))
+        setSourceImage(imageURL)
+    }}
+    getImage()
     return(
         <>
             <div className={classes.container}>
@@ -21,7 +31,7 @@ const DisplayEvent = (props) => {
             </div>
             
             <div className={classes.event}>
-                <img className={classes.eventImage} src='https://source.unsplash.com/random' />
+                <img className={classes.eventImage} src={sourceImage} />
                 
                 <div className={classes.eventTextContent}>
                     <div className={classes.timeAndPlace}>

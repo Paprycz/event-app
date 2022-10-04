@@ -7,6 +7,7 @@ import useStylesEventCards from '../styles/stylesEventCards';
 import TitleContent from './TitleContent';
 import MakeAnEventHTML from './MakeAnEventHTML';
 import DialogWindow from '../DialogWindow/DialogWindow';
+import { v4 } from 'uuid';
 
 const EventCards = (props) => {
 
@@ -39,7 +40,7 @@ const EventCards = (props) => {
                                     <Button
                                         className={classes.buttonAdd} 
                                         color="primary" 
-                                        onClick={()=>{(setOpenDialog(true))}}
+                                        onClick={()=>{setOpenDialog(true)}}
                                     >
                                         <AddCircleIcon fontSize="inherit" />
                                     </Button>
@@ -49,6 +50,7 @@ const EventCards = (props) => {
                     
                     <DialogWindow
                         key="DialogWindow"
+                        eventKey={v4()}
                         open={openDialog} 
                         closeDialog={()=> {
                             setOpenDialog(false)

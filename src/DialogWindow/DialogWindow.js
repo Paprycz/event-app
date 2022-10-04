@@ -8,6 +8,9 @@ import FormControl from '@mui/material/FormControl';
 import { MuiTelInput, matchIsValidTel } from 'mui-tel-input'
 import Select from '@mui/material/Select';
 
+import { storage } from '../firebase'
+import { ref, uploadBytes } from 'firebase/storage'
+
 import useStylesDialog from "../styles/stylesDialog";
 
 
@@ -17,19 +20,21 @@ const DialogWindow = (props) => {
 //STYLES HANDLER (CSS - MUI)
     const {classes} = useStylesDialog();
 
+
 //FUNCTION CREATING EVENT OBJECT
 
     const makeAnEvent = () => {
         return({
-            key : document.querySelector("#dateContent").value+'_'+document.querySelector("#titleContent").value.replace(/\s+/g, '-').toLowerCase(),
-            title : document.querySelector("#titleContent").value,
-            place : document.querySelector("#placeContent").value,
+            key : props.eventKey,
+            title : title.value,
+            place : place.value,
             type : list.value,
-            date : document.querySelector("#dateContent").value,
-            time: document.querySelector("#timeContent").value,
-            phone : document.querySelector("#phoneContent").value,
-            description : document.querySelector("#descriptionContent").value,
-            email : document.querySelector("#emailContent").value
+            date : date.value,
+            time: time.value,
+            phone : phone.value,
+            description : description.value,
+            email : email.value,
+            image : image.name + '_' + props.eventKey
         })
     }
 
@@ -87,20 +92,27 @@ const DialogWindow = (props) => {
         });
     }
 
-    //EVENT IMAGE SRC STATE
-    const [image, setImage] = useState({
-        value:"",
-        error: false,
-        errorMes:""
-    })
+    //EVENT IMAGE STATE
+    const [image, setImage] = useState(null)
 
-    //EVENT IMAGE MINIATURE SET FUNCTION
-    const checkImage = ()=>{
-        if(image.value !== ""){
-            return(
-                <img src={image.value}/>
-            )
-        } else return(<div>Brak Zdjęcia</div>)
+    //EVENT IMAGE UPLOAD FUNCTION
+    const handleImageUpload = () => {
+        if(image === null) return;
+        const imageRef = ref(storage, `images/${image.name}_${props.eventKey}`)
+        uploadBytes(imageRef, image).then(() => {
+            alert("Image uploaded")
+        })
+    }
+    
+    //EVENT USE IMAGE FUNCTION
+
+    const imageUse = () => {
+        if(!image) return(<div>Brak zdjęcia</div>)
+        return (
+        <div className={classes.imageMiniature}>
+            {image.name}
+        </div>
+        )
     }
 
     //EVENT DATE STATE
@@ -179,8 +191,7 @@ const DialogWindow = (props) => {
 
 //EVENT INPUT CLEARING FUNCTION
     const clearDialog = () =>{ 
-        console.log(image)
-        console.log(document.querySelector("#photoInput").value)
+        setImage(null)
         setTitle({value:"", error:false, errorMes: ""})
         setPlace({value:"", error:false, errorMes: ""})
         setList({vlaue:"", error:false, errorMes: ""})
@@ -221,8 +232,6 @@ const DialogWindow = (props) => {
         //PLACE CHECKING CONDITIONS
         
             //IF WRONG
-            console.log("halo")
-            console.log(place)
             if(!place.value || place.value[0] === " ") {
                 setPlace({
                     ...place,
@@ -374,8 +383,9 @@ const DialogWindow = (props) => {
         if(!errorCatch) {
             const temp = makeAnEvent()
             localStorage.setItem("Event_"+temp.key, JSON.stringify(temp))
-            handleClose()
+            handleImageUpload()
             clearDialog()
+            handleClose()
         }
     }
 
@@ -443,9 +453,9 @@ const DialogWindow = (props) => {
                                 <Button variant="outlined" component="label">
                                     Dodaj zdjęcie
                                    
-                                    <input id="photoInput" hidden accept="image/*" multiple type="file" />
+                                    <input id="photoInput" hidden accept="image/*" multiple type="file" onChange={(e)=>{setImage(e.target.files[0])}} />
                                 </Button>
-                                    <div>{checkImage()}</div>
+                                {imageUse()}
                             </div>
                     </div>
                 </Grid>
@@ -506,7 +516,9 @@ const DialogWindow = (props) => {
             <Button onClick={clearDialog}>Wyczyść</Button>
             
             <Button 
-                onClick={()=>{checkEvent()}}
+                onClick={()=>{
+                    checkEvent()
+                }}
             >
                 Zatwierdź
             </Button>
